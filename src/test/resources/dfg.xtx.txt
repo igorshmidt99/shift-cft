@@ -1,4 +1,4 @@
-false\n
-true\n
-3425.2345\n
-TEXT\n
+false
+true
+3425.2345
+TEXT
