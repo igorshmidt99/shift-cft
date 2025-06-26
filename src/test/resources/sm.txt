@@ -1,0 +1,4 @@
+Text with content
+1234
+true
+1234.1234
