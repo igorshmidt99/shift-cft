@@ -7,6 +7,7 @@ import java.util.List;
 
 public class StatisticsServiceImpl implements StatisticsService {
 
+    // TODO исправить сервис статистики
     @Override
     public StringDto getStatisticsFromStrings(List<String> strings) {
         var min = String.valueOf(Long.MAX_VALUE);

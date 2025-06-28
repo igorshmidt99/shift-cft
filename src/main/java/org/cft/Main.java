@@ -26,13 +26,11 @@ public class Main {
         setConfiguration(args);
         DataFromFileDto content = extractData(args);
         fillFilesAndPrintStatistics(content);
-
-
     }
 
     private static void fillFilesAndPrintStatistics(DataFromFileDto content) {
         String statisticsKey = "statistics";
-        FileFiller fileFiller = new FileFillerImpl();
+        FileFiller fileFiller = new FileFillerImpl(new StatisticsServiceImpl());
 
         String intPath = System.getProperty("output.path", "");
         String intName = System.getProperty("file.prefix", "") + "integers.txt";
@@ -45,13 +43,13 @@ public class Main {
         StringDto strings = content.getStrings();
         NumbersDto reals = content.getRealNumbers();
         if (!integers.getNumbers().isEmpty()) {
-            fileFiller.fill(intPath, intName, integers.getNumbers());
+            integers = fileFiller.fillInts(intPath, intName, integers.getNumbers());
         }
         if (!strings.getStrings().isEmpty()) {
-            fileFiller.fill(stringsPath, stringName, strings.getStrings());
+            strings = fileFiller.fillStrings(stringsPath, stringName, strings.getStrings());
         }
         if (!reals.getNumbers().isEmpty()) {
-            fileFiller.fill(floatsPath, floatName, reals.getNumbers());
+            reals = fileFiller.fillReals(floatsPath, floatName, reals.getNumbers());
         }
 
         if (System.getProperty(statisticsKey, "").equals("full")) {
