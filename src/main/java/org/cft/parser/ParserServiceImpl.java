@@ -12,7 +12,7 @@ public class ParserServiceImpl implements ParserService {
 
     @Override
     public List<String> parseFrom(List<String> args) {
-        Pattern filePattern = Pattern.compile(".+(\\.txt)$");
+        Pattern filePattern = Pattern.compile(".+\\.txt$");
         return args.stream()
                 .filter(arg -> filePattern.matcher(arg).matches())
                 .map(Path::of)

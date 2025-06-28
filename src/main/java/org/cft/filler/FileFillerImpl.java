@@ -1,33 +1,37 @@
 package org.cft.filler;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class FileFillerImpl implements FileFiller {
 
     @Override
-    public void fill(String filePath, List<String> content) {
+    public void fill(String filePath, String fileName, List<String> content) {
         try {
-            Path path = Path.of(filePath);
-            File file = path.toFile();
-            if (file.exists()) {
-                file.delete();
-            }
-            Files.createFile(path);
-            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-                for (String line : content) {
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
-                }
-            }
+            fillByPath(filePath, fileName, content);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error writing to file: " + filePath);
+            System.err.println("Writing to current directory.");
+            try {
+                fillByPath("", fileName, content);
+            } catch (IOException ex) {
+                System.err.println("Error writing to current directory.");
+            }
         }
-
     }
 
+    private void fillByPath(String filePath, String fileName, List<String> content) throws IOException {
+        Path path = Path.of(filePath + fileName);
+        if (System.getProperty("append", "false").equals("true")) {
+            Files.write(path, content, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } else {
+            if (path.toFile().exists()) {
+                Files.delete(path);
+            }
+            Files.write(path, content, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+        }
+    }
 }
