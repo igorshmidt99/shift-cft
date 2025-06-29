@@ -77,7 +77,7 @@ public class EndToEnd {
 
     @Test
     void testWithErrorInputShouldProduceErrorOutput() {
-        String[] args = {"-o", "-p", "src/test/resources/something.txt",
+        String[] args = {"-o", "-p", "src/test/resources/something_ints.txt",
                 "src/test/resources/sm.txt", "src/test/resources/path/to/file/1-2_3$r.txt"};
         Main.main(args);
     }

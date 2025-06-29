@@ -80,7 +80,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 max = value;
             }
         }
-        return new StringDto(strings, min, max);
+        return new StringDto(strings, String.valueOf(min.length()), String.valueOf(max.length()));
     }
 
     private NumbersDto getStatisticsFromIntegers(List<String> integers) {
