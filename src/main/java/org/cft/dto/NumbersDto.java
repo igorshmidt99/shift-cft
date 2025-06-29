@@ -10,6 +10,17 @@ public class NumbersDto {
     private Number sum;
     private Number average;
 
+    public NumbersDto(List<String> numbers, Number maxValue, Number minValue, Number sum, Number average) {
+        this.numbers = numbers;
+        this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.sum = sum;
+        this.average = average;
+    }
+
+    public NumbersDto() {
+    }
+
     public List<String> getNumbers() {
         return numbers;
     }

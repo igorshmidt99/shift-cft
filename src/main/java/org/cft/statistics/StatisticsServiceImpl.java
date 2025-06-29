@@ -3,13 +3,73 @@ package org.cft.statistics;
 import org.cft.dto.NumbersDto;
 import org.cft.dto.StringDto;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class StatisticsServiceImpl implements StatisticsService {
 
-    // TODO исправить сервис статистики
     @Override
-    public StringDto getStatisticsFromStrings(List<String> strings) {
+    public StringDto readStringsStatistics(String filePath, String fileName) {
+        StringDto stringDto = new StringDto();
+        try {
+            Path path = Path.of(filePath + fileName);
+            List<String> data = Files.readAllLines(path);
+            if (!data.isEmpty()) {
+                stringDto = getStatisticsFromStrings(data);
+            }
+        } catch (IOException e) {
+            System.err.println("Can't read statistics.");
+        }
+        return stringDto;
+    }
+
+    @Override
+    public NumbersDto readRealsStatistics(String filePath, String fileName) {
+        NumbersDto numbersDto = new NumbersDto();
+        try {
+            Path path = Path.of(filePath + fileName);
+            List<String> data = Files.readAllLines(path);
+            if (!data.isEmpty()) {
+                numbersDto = getStatisticsFromRealNumbers(data);
+            }
+        } catch (IOException e) {
+            System.err.println("Can't read statistics.");
+        }
+        return numbersDto;
+    }
+
+    @Override
+    public NumbersDto readIntsStatistics(String filePath, String fileName) {
+        NumbersDto numbersDto = new NumbersDto();
+        try {
+            Path path = Path.of(filePath + fileName);
+            List<String> data = Files.readAllLines(path);
+            if (!data.isEmpty()) {
+                numbersDto = getStatisticsFromIntegers(data);
+            }
+        } catch (IOException e) {
+            System.err.println("Can't read statistics.");
+        }
+        return numbersDto;
+    }
+
+    @Override
+    public void printStatistics(NumbersDto intsWithStats, StringDto stringsWithStats, NumbersDto realsWithStats) {
+        String statisticsKey = "statistics";
+        if (System.getProperty(statisticsKey, "").equals("full")) {
+            System.out.println(intsWithStats);
+            System.out.println(realsWithStats);
+            System.out.println(stringsWithStats);
+        } else if (System.getProperty(statisticsKey, "").equals("short")) {
+            System.out.println("Total integers amount: " + intsWithStats.getNumbers().size());
+            System.out.println("Total strings amount: " + stringsWithStats.getStrings().size());
+            System.out.println("Total real numbers amount: " + realsWithStats.getNumbers().size());
+        }
+    }
+
+    private StringDto getStatisticsFromStrings(List<String> strings) {
         var min = String.valueOf(Long.MAX_VALUE);
         var max = "";
         for (String value : strings) {
@@ -23,8 +83,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new StringDto(strings, min, max);
     }
 
-    @Override
-    public NumbersDto getStatisticsFromIntegers(List<String> integers) {
+    private NumbersDto getStatisticsFromIntegers(List<String> integers) {
         List<Long> parsedIntegers = integers.stream()
                 .map(Long::parseLong)
                 .toList();
@@ -53,8 +112,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return integersDto;
     }
 
-    @Override
-    public NumbersDto getStatisticsFromRealNumbers(List<String> realNums) {
+    private NumbersDto getStatisticsFromRealNumbers(List<String> realNums) {
         List<Double> parsedReals = realNums.stream()
                 .map(Double::parseDouble)
                 .toList();
@@ -64,7 +122,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         var average = 0.0;
         NumbersDto realNumbersDto = new NumbersDto();
         for (Double val : parsedReals) {
-
             if (val < min) {
                 min = val;
             }

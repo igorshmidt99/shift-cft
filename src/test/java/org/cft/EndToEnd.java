@@ -82,4 +82,11 @@ public class EndToEnd {
         Main.main(args);
     }
 
+
+    @Test
+    void testWith() {
+        String[] args = {"-o" ,"-p" ,"without_string" ,"-a" ,"-f"};
+        Main.main(args);
+    }
+
 }

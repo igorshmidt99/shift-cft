@@ -1,15 +1,8 @@
 package org.cft.filler;
 
-import org.cft.dto.NumbersDto;
-import org.cft.dto.StringDto;
-
-import java.util.List;
+import org.cft.dto.DataFromFileDto;
 
 public interface FileFiller {
 
-    NumbersDto fillInts(String intPath, String intName, List<String> numbers);
-
-    StringDto fillStrings(String stringsPath, String stringName, List<String> strings);
-
-    NumbersDto fillReals(String floatsPath, String floatName, List<String> numbers);
+    void fillFiles(DataFromFileDto content);
 }

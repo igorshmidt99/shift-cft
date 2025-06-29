@@ -3,14 +3,12 @@ package org.cft.statistics;
 import org.cft.dto.NumbersDto;
 import org.cft.dto.StringDto;
 
-import java.util.List;
-
 public interface StatisticsService {
+    void printStatistics(NumbersDto intsWithStats, StringDto stringsWithStats, NumbersDto realsWithStats);
 
-    StringDto getStatisticsFromStrings(List<String> strings);
+    NumbersDto readRealsStatistics(String filePath, String fileName);
 
-    NumbersDto getStatisticsFromIntegers(List<String> ints);
+    StringDto readStringsStatistics(String filePath, String fileName);
 
-    NumbersDto getStatisticsFromRealNumbers(List<String> reals);
-
+    NumbersDto readIntsStatistics(String filePath, String fileName);
 }

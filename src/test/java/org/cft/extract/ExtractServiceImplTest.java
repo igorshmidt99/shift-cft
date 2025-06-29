@@ -1,10 +1,10 @@
 package org.cft.extract;
 
 import org.cft.dto.DataFromFileDto;
+import org.cft.dto.NumbersDto;
 import org.cft.dto.StringDto;
 import org.cft.filter.FilterServiceImpl;
-import org.cft.dto.NumbersDto;
-import org.cft.statistics.StatisticsServiceImpl;
+import org.cft.parser.ParserServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -18,8 +18,7 @@ class ExtractServiceImplTest {
             new FilterServiceImpl(
                     Pattern.compile("^-?\\d+$"),
                     Pattern.compile("^-?\\d+\\.\\d+([eE][-+]?\\d+)?$")
-            ),
-            new StatisticsServiceImpl()
+            ), new ParserServiceImpl()
     );
 
     @Test
@@ -51,21 +50,24 @@ class ExtractServiceImplTest {
         realsDto.setSum(1357.2464D);
         realsDto.setMinValue(123.123D);
 
-        DataFromFileDto expected = new DataFromFileDto(stringDto, intsDto, realsDto);
+        DataFromFileDto expected = new DataFromFileDto(strings, ints, realNums);
+        String prefix = "src/test/resources/";
+        String[] args = {"-o", "src/test/resources/created", "-p", "endToEndTest",
+                prefix + "something.txt", prefix + "sm.txt", prefix + "path/to/file/1-2_3$r.txt"};
+        DataFromFileDto actual = service.extractData(args);
 
-        DataFromFileDto actual = service.extract(fromFile);
-
-        assertEquals(expected.getIntegers().getAverage(), actual.getIntegers().getAverage());
-        assertEquals(expected.getIntegers().getMaxValue(), actual.getIntegers().getMaxValue());
-        assertEquals(expected.getIntegers().getMinValue(), actual.getIntegers().getMinValue());
-        assertEquals(expected.getIntegers().getSum(), actual.getIntegers().getSum());
-        assertEquals(expected.getIntegers().getNumbers(), actual.getIntegers().getNumbers());
-
-        assertEquals(expected.getRealNumbers().getAverage(), actual.getRealNumbers().getAverage());
-        assertEquals(expected.getRealNumbers().getMaxValue(), actual.getRealNumbers().getMaxValue());
-        assertEquals(expected.getRealNumbers().getMinValue(), actual.getRealNumbers().getMinValue());
-        assertEquals(expected.getRealNumbers().getSum(), actual.getRealNumbers().getSum());
-        assertEquals(expected.getRealNumbers().getNumbers(), actual.getRealNumbers().getNumbers());
+//        assertEquals(expected.getIntegers().getAverage(), actual.getIntegers().getAverage());
+//        assertEquals(expected.getIntegers().getMaxValue(), actual.getIntegers().getMaxValue());
+//        assertEquals(expected.getIntegers().getMinValue(), actual.getIntegers().getMinValue());
+//        assertEquals(expected.getIntegers().getSum(), actual.getIntegers().getSum());
+//        assertEquals(expected.getIntegers().getNumbers(), actual.getIntegers().getNumbers());
+//
+//        assertEquals(expected.getRealNumbers().getAverage(), actual.getRealNumbers().getAverage());
+//        assertEquals(expected.getRealNumbers().getMaxValue(), actual.getRealNumbers().getMaxValue());
+//        assertEquals(expected.getRealNumbers().getMinValue(), actual.getRealNumbers().getMinValue());
+//        assertEquals(expected.getRealNumbers().getSum(), actual.getRealNumbers().getSum());
+//        assertEquals(expected.getRealNumbers().getNumbers(), actual.getRealNumbers().getNumbers());
+        assertEquals(expected, actual);
     }
 
 }

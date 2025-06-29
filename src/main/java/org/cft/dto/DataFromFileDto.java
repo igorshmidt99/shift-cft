@@ -1,13 +1,14 @@
 package org.cft.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 public class DataFromFileDto {
-    private StringDto strings;
-    private NumbersDto integers;
-    private NumbersDto realNumbers;
+    private List<String> strings;
+    private List<String> integers;
+    private List<String> realNumbers;
 
-    public DataFromFileDto(StringDto strings, NumbersDto integers, NumbersDto realNumbers) {
+    public DataFromFileDto(List<String> strings, List<String> integers, List<String> realNumbers) {
         this.strings = strings;
         this.integers = integers;
         this.realNumbers = realNumbers;
@@ -16,27 +17,27 @@ public class DataFromFileDto {
     public DataFromFileDto() {
     }
 
-    public StringDto getStrings() {
+    public List<String> getStrings() {
         return strings;
     }
 
-    public void setStrings(StringDto strings) {
+    public void setStrings(List<String> strings) {
         this.strings = strings;
     }
 
-    public NumbersDto getIntegers() {
+    public List<String> getIntegers() {
         return integers;
     }
 
-    public void setIntegers(NumbersDto integers) {
+    public void setIntegers(List<String> integers) {
         this.integers = integers;
     }
 
-    public NumbersDto getRealNumbers() {
+    public List<String> getRealNumbers() {
         return realNumbers;
     }
 
-    public void setRealNumbers(NumbersDto realNumbers) {
+    public void setRealNumbers(List<String> realNumbers) {
         this.realNumbers = realNumbers;
     }
 

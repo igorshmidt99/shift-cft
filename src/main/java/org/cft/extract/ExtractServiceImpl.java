@@ -1,33 +1,29 @@
 package org.cft.extract;
 
 import org.cft.dto.DataFromFileDto;
-import org.cft.dto.NumbersDto;
-import org.cft.dto.StringDto;
 import org.cft.filter.FilterService;
-import org.cft.statistics.StatisticsService;
+import org.cft.parser.ParserService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExtractServiceImpl implements ExtractService {
 
     private final FilterService filterService;
+    private final ParserService parserService;
 
-    private final StatisticsService statisticsService;
-
-    public ExtractServiceImpl(FilterService filterService, StatisticsService statisticsService) {
+    public ExtractServiceImpl(FilterService filterService, ParserService parserService) {
         this.filterService = filterService;
-        this.statisticsService = statisticsService;
+        this.parserService = parserService;
     }
 
     @Override
-    public DataFromFileDto extract(List<String> content) {
-        List<String> fromFile = new ArrayList<>(content);
+    public DataFromFileDto extractData(String[] args) {
+        List<String> data = parserService.parseFrom(Arrays.stream(args).toList());
+        List<String> fromFile = new ArrayList<>(data);
         List<String> integers = filterService.filterIntegers(fromFile);
         List<String> reals = filterService.filterRealNumbers(fromFile);
-        NumbersDto statisticsFromIntegers = statisticsService.getStatisticsFromIntegers(integers);
-        NumbersDto statisticsFromRealNumbers = statisticsService.getStatisticsFromRealNumbers(reals);
-        StringDto statisticsFromStrings = statisticsService.getStatisticsFromStrings(fromFile);
-        return new DataFromFileDto(statisticsFromStrings, statisticsFromIntegers, statisticsFromRealNumbers);
+        return new DataFromFileDto(fromFile, integers, reals);
     }
 }
