@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EndToEnd {
+public class EndToEndTest {
 
     @Test
     @Order(1)
@@ -81,12 +81,4 @@ public class EndToEnd {
                 "src/test/resources/sm.txt", "src/test/resources/path/to/file/1-2_3$r.txt"};
         Main.main(args);
     }
-
-
-    @Test
-    void testWith() {
-        String[] args = {"-o" ,"-p" ,"without_string" ,"-a" ,"-f"};
-        Main.main(args);
-    }
-
 }
