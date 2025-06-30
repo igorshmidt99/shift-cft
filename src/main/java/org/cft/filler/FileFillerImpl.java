@@ -23,9 +23,9 @@ public class FileFillerImpl implements FileFiller {
     public void fillFiles(DataFromFileDto content) {
         String intPath = System.getProperty("output.path", "");
         String intName = System.getProperty("file.prefix", "") + "integers.txt";
-        String stringsPath = System.getProperty("output.path", ".");
+        String stringsPath = System.getProperty("output.path", "");
         String stringName = System.getProperty("file.prefix", "") + "strings.txt";
-        String floatsPath = System.getProperty("output.path", ".");
+        String floatsPath = System.getProperty("output.path", "");
         String floatName = System.getProperty("file.prefix", "") + "floats.txt";
         List<String> integers = content.getIntegers();
         List<String> strings = content.getStrings();
